@@ -115,12 +115,13 @@ def progress(birth_list, token):
         content += f"- 距离下次生日还有 {item['nextBirthDay']} 天\n"
 
     print("生成内容完成")
+    print(content)
     print("开始发送通知...")
 
-    notify({
-        'title': "开心每一天",
-        'desp': content
-    }, token)
+#     notify({
+#         'title': "开心每一天",
+#         'desp': content
+#     }, token)
 
 def get_str_obj(env_var):
     """解析环境变量中的字符串对象"""
