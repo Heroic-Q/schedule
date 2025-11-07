@@ -29,5 +29,5 @@ jobs:
           python3 checkin.py
         env:
           SERVE: ${{ secrets.SERVE }}
-          SCKEY: ${{ secrets.SCKEY }}
+          NOTIFY: ${{ secrets.NOTIFY }}
           BIRTHS: ${{ secrets.BIRTHS }}
