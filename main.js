@@ -20,7 +20,6 @@ const progress = async (birthList, token) => {
     `
   }
   console.log("生成内容完成")
-  console.log(content)
   console.log("开始发送通知...");
   await notify({
     title: "开心每一天",
@@ -70,8 +69,6 @@ const calculateBirthDay = (birthList) => {
 }
 
 const notify = async (contents, token) => {
-  console.log("contents=", contents)
-  console.log("token=", token)
   if (!token || !contents) {
     console.log("通知跳过：token 或 contents 为空");
     return;
@@ -93,8 +90,7 @@ const notify = async (contents, token) => {
 const main = async () => {
   const birthList = getStrObj(process.env.BIRTHS);
   const NOTIFY = getStrObj(process.env.NOTIFY);
-  console.log("NOTIFY", NOTIFY)
-  await progress(birthList, NOTIFY[0])
+  await progress(birthList, NOTIFY)
   console.log("执行完成");
 };
 
