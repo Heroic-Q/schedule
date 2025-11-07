@@ -24,7 +24,7 @@ const progress = async (birthList, token) => {
   }, token)
 }
 
-const calculateBirthDay = () => {
+const calculateBirthDay = (birthList) => {
   let dataList = []
   let today = Lunar.fromDate(new Date())
   for (let i = 0; i < birthList.length; i++) {
