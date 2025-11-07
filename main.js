@@ -68,24 +68,43 @@ const calculateBirthDay = (birthList) => {
   return dataList
 }
 
+// const notify = async (contents, token) => {
+//   if (!token || !contents) {
+//     console.log("通知跳过：token 或 contents 为空");
+//     return;
+//   }
+//   console.log("开始发送 HTTP 请求...");
+//   const response = await fetch(`https://sctapi.ftqq.com/${token}.send`, {
+//     method: "POST",
+//     headers: { "content-type": "application/json" },
+//     body: JSON.stringify({
+//       token,
+//       title: contents?.title,
+//       desp: contents?.desp,
+//     }),
+//   });
+//
+//   console.log(`HTTP 响应状态: ${response.status} ${response.statusText}`);
+// }
+
 const notify = async (contents, token) => {
   if (!token || !contents) {
     console.log("通知跳过：token 或 contents 为空");
     return;
   }
   console.log("开始发送 HTTP 请求...");
-  const response = await fetch(`https://sctapi.ftqq.com/${token}.send`, {
+  const response = await fetch(`https://www.pushplus.plus/send`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
       token,
-      title: contents?.title,
-      desp: contents?.desp,
+      title: contents.title,
+      content: contents.desp,
+      template: "markdown",
     }),
   });
-
   console.log(`HTTP 响应状态: ${response.status} ${response.statusText}`);
-}
+};
 
 const main = async () => {
   const birthList = getStrObj(process.env.BIRTHS);
