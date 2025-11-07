@@ -117,7 +117,7 @@ def progress(birth_list, token):
         content += f"- 距离下次生日还有 {item['nextBirthDay']} 天\n"
 
     print("生成内容完成")
-    print(content)
+    print("content=", content)
     print("开始发送通知...")
 
 #     notify({
@@ -128,21 +128,19 @@ def progress(birth_list, token):
 def get_str_obj(env_var):
     """解析环境变量中的字符串对象"""
     try:
-        print("解析环境变量中的字符串对象")
         env_value = os.environ.get(env_var, '[]')
-        print(env_value)
-        print("---------------")
-        print(env_var)
-        print("---------------")
-        return json.loads(os.environ.get(env_var, '[]'))
-    except:
+        print(f"环境变量 {env_var} 的值: {env_value}")  # 查看实际值
+        result = json.loads(env_value)
+        print(f"解析后的数据: {result}")  # 查看解析结果
+        return result
+    except Exception as e:
+        print(f"解析环境变量 {env_var} 失败: {e}")
         return []
 
 def main():
     """主函数"""
     birth_list = get_str_obj('BIRTHS')
     notify_token = os.environ.get('NOTIFY', '')
-    print("notify_token", notify_token)
     progress(birth_list, notify_token)
     print("执行完成")
 
