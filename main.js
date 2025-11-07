@@ -1,10 +1,12 @@
 const { Lunar } = require("./lunar");
 
 const progress = async (birthList, token) => {
+  console.log("开始处理数据...");
   let today = Lunar.fromDate(new Date())
   let solarToday = today.getSolar()
   let solarDate = solarToday.getYear() + "-" + solarToday.getMonth() + "-" + solarToday.getDay()
   let lunarDate = today.getYearInChinese() + "年，" + today.getMonthInChinese() + "月，" + today.getDayInChinese() + "日"
+  console.log("计算生日信息...");
   let dataList = calculateBirthDay(birthList)
   let content = `
 # 今天是 ${solarDate}，阴历 ${lunarDate}
@@ -17,7 +19,9 @@ const progress = async (birthList, token) => {
 - 距离下次生日还有 ${item.nextBirthDay} 天
     `
   }
+  console.log("生成内容完成")
   console.log(content)
+  console.log("开始发送通知...");
   await notify({
     title: "开心每一天",
     desp: content
@@ -25,6 +29,7 @@ const progress = async (birthList, token) => {
 }
 
 const calculateBirthDay = (birthList) => {
+  console.log("开始计算生日距离...");
   let dataList = []
   let today = Lunar.fromDate(new Date())
   for (let i = 0; i < birthList.length; i++) {
@@ -65,8 +70,12 @@ const calculateBirthDay = (birthList) => {
 }
 
 const notify = async (contents, token) => {
-  if (!token || !contents) return;
-  await fetch(`https://sctapi.ftqq.com/${token}.send`, {
+  if (!token || !contents) {
+    console.log("通知跳过：token 或 contents 为空");
+    return;
+  }
+  console.log("开始发送 HTTP 请求...");
+  const response = await fetch(`https://sctapi.ftqq.com/${token}.send`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
@@ -75,6 +84,8 @@ const notify = async (contents, token) => {
       desp: contents?.desp,
     }),
   });
+
+  console.log(`HTTP 响应状态: ${response.status} ${response.statusText}`);
 }
 
 const main = async () => {
