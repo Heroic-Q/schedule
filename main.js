@@ -91,6 +91,7 @@ const notify = async (contents, token) => {
 const main = async () => {
   const birthList = getStrObj(process.env.BIRTHS);
   const NOTIFY = getStrObj(process.env.NOTIFY);
+  console.log("NOTIFY", NOTIFY)
   await progress(birthList, NOTIFY[0])
   console.log("执行完成");
 };
