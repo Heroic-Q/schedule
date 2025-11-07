@@ -142,7 +142,7 @@ def main():
     """主函数"""
     birth_list = get_str_obj('BIRTHS')
     notify_token = os.environ.get('NOTIFY', '')
-
+    print("notify_token", notify_token)
     progress(birth_list, notify_token)
     print("执行完成")
 
