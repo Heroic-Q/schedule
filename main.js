@@ -103,7 +103,7 @@ const notify = async (contents, token) => {
       template: "markdown",
     }),
   });
-  console.log(`HTTP 响 应状态: ${response.status} ${response.statusText}`);
+  console.log(`HTTP 响应状态: ${response.status} ${response.statusText}`);
 };
 
 const main = async () => {
