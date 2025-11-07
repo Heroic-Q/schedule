@@ -128,13 +128,13 @@ def progress(birth_list, token):
 def get_str_obj(env_var):
     """解析环境变量中的字符串对象"""
     try:
-       env_value = os.environ.get(env_var, '[]')
-       print(f"环境变量名: {env_var}")
-       print(f"环境变量值: {repr(env_value)}")  # 使用repr查看真实字符串
-       return json.loads(env_value)
-   except Exception as e:
-       print(f"解析错误: {e}")
-       return []
+        print("解析环境变量中的字符串对象")
+        print(os.environ.get(env_var, '[]'))
+        print("---------------")
+        print(os.environ.get('NOTIFY', '[]'))
+        return json.loads(os.environ.get(env_var, '[]'))
+    except:
+        return []
 
 def main():
     """主函数"""
