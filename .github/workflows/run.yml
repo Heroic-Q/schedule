@@ -1,21 +1,33 @@
-name: run
+name: glados-checkin
 
 on:
-  workflow_dispatch:
   push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   schedule:
-    - cron: 00 8 * * *
-
+    - cron:  0 8 * * *
+  workflow_dispatch:
 jobs:
-  run:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run main
+      - uses: actions/checkout@v2
+
+      - name: Install Python
+        run: |
+          sudo apt update && \
+          sudo apt install python3
+
+      - name: requirements
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: Checkin
+        run: |
+          python3 checkin.py
         env:
+          SERVE: ${{ secrets.SERVE }}
+          SCKEY: ${{ secrets.SCKEY }}
           BIRTHS: ${{ secrets.BIRTHS }}
-          NOTIFY: ${{ secrets.NOTIFY }}

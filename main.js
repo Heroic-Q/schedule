@@ -74,28 +74,14 @@ const notify = async (contents, token) => {
     return;
   }
   console.log("开始发送 HTTP 请求...");
-  const postData = `text=${encodeURIComponent(contents.title)}&desp=${encodeURIComponent(contents.desp)}`;
-  const url = String(token).startsWith('sctp')
-      ? `https://${token.match(/^sctp(\d+)t/)[1]}.push.ft07.com/send/${token}.send`
-      : `https://sctapi.ftqq.com/${token}.send`;
-  const encoder = new TextEncoder();
-  const contentLength = encoder.encode(postData).length;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Content-Length': contentLength
-    },
-    body: postData
+  const response = await fetch(`https://sctapi.ftqq.com/${token}.send`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      title: contents?.title,
+      desp: contents?.desp,
+    }),
   });
-  // const response = await fetch(`https://sctapi.ftqq.com/${token}.send`, {
-  //   method: "POST",
-  //   headers: { "content-type": "application/json" },
-  //   body: JSON.stringify({
-  //     title: contents?.title,
-  //     desp: contents?.desp,
-  //   }),
-  // });
 
   console.log(`HTTP 响应状态: ${response.status} ${response.statusText}`);
 }
