@@ -107,6 +107,8 @@ def progress(birth_list, token):
     print("计算生日信息...")
     data_list = calculate_birth_day(birth_list)
 
+    print(data_list)
+
     content = f"# 今天是 {solar_date}，阴历 {lunar_date}\n"
 
     for item in data_list:
