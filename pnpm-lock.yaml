@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      chinese-lunar:
+        specifier: ^0.1.4
+        version: 0.1.4
+
+packages:
+
+  chinese-lunar@0.1.4:
+    resolution: {integrity: sha512-E4seb9UZkSJtkm65Ry2ZLWTw5Z87DOyGcCePdg3ft7da342hnEliMtcDAPSn+YSo/o0xl1Egmhh671kxEJgY+g==}
+
+snapshots:
+
+  chinese-lunar@0.1.4: {}
