@@ -1,22 +1,30 @@
 const { Lunar } = require("./lunar");
 
-const main = async () => {
+const progress = async (birthList, token) => {
   let today = Lunar.fromDate(new Date())
   let solarToday = today.getSolar()
   let solarDate = solarToday.getYear() + "-" + solarToday.getMonth() + "-" + solarToday.getDay()
   let lunarDate = today.getYearInChinese() + "年，" + today.getMonthInChinese() + "月，" + today.getDayInChinese() + "日"
-  console.log(lunarDate, solarDate)
-  let dataList = calculateBirthDay()
-  console.log(dataList)
+  let dataList = calculateBirthDay(birthList)
+  let content = `
+# 今天是 ${solarDate}，阴历 ${lunarDate}
+  `
+  for (let i = 0; i < dataList.length; i++) {
+    let item = dataList[i]
+    content += `
+## ${item.name}
+- ${item.birth}，${item.age}岁
+- 距离下次生日还有 ${item.nextBirthDay} 天
+    `
+  }
+  console.log(content)
   await notify({
-    title: "",
-    desp: ''
-  }, '')
+    title: "开心每一天",
+    desp: content
+  }, token)
 }
 
-
-
-const calculateBirthDay = async () => {
+const calculateBirthDay = () => {
   let dataList = []
   let today = Lunar.fromDate(new Date())
   for (let i = 0; i < birthList.length; i++) {
@@ -67,6 +75,27 @@ const notify = async (contents, token) => {
       desp: contents?.desp,
     }),
   });
+}
+
+const main = async () => {
+  const birthList = getStrObj(process.env.BIRTHS);
+  const NOTIFY = getStrObj(process.env.NOTIFY);
+  await Promise.all(
+    progress(birthList, NOTIFY[0])
+  );
+  console.log("执行完成");
+};
+
+function getStrObj(str) {
+  try {
+    const res = new Function(`return ${str}`)();
+    if (!Array.isArray(res)) {
+      return [res];
+    }
+    return res;
+  } catch (e) {
+    return [];
+  }
 }
 
 main();
