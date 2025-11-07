@@ -70,6 +70,8 @@ const calculateBirthDay = (birthList) => {
 }
 
 const notify = async (contents, token) => {
+  console.log("contents=", contents)
+  console.log("token=", token)
   if (!token || !contents) {
     console.log("通知跳过：token 或 contents 为空");
     return;
