@@ -129,9 +129,11 @@ def get_str_obj(env_var):
     """解析环境变量中的字符串对象"""
     try:
         print("解析环境变量中的字符串对象")
-        print(os.environ.get(env_var, '[]'))
+        env_value = os.environ.get(env_var, '[]')
+        print(env_value)
         print("---------------")
-        print(os.environ.get('NOTIFY', '[]'))
+        print(env_var)
+        print("---------------")
         return json.loads(os.environ.get(env_var, '[]'))
     except:
         return []
