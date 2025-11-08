@@ -129,10 +129,34 @@ def get_str_obj(env_var):
     """解析环境变量中的字符串对象"""
     try:
         env_value = os.environ.get(env_var, '[]')
-        print(f"环境变量 {env_var} 的值: {env_value}")  # 查看实际值
+        print(f"环境变量 {env_var} 的值: {repr(env_value)}")  # 使用 repr 显示原始字符串
+
+        # 尝试清理可能的格式问题
+        env_value = env_value.strip()
+
+        # 如果是空的，返回空列表
+        if not env_value:
+            print(f"环境变量 {env_var} 为空")
+            return []
+
         result = json.loads(env_value)
-        print(f"解析后的数据: {result}")  # 查看解析结果
+        print(f"解析后的数据: {result}")
         return result
+    except json.JSONDecodeError as e:
+        print(f"JSON 解析错误: {e}")
+        print(f"原始字符串: {repr(env_value)}")
+
+        # 尝试修复常见的 JSON 格式问题
+        try:
+            # 替换单引号为双引号
+            env_value_fixed = env_value.replace("'", '"')
+            result = json.loads(env_value_fixed)
+            print(f"修复单引号后解析成功: {result}")
+            return result
+        except:
+            print("修复单引号后仍然解析失败")
+
+        return []
     except Exception as e:
         print(f"解析环境变量 {env_var} 失败: {e}")
         return []
