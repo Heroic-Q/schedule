@@ -117,13 +117,12 @@ def progress(birth_list, token):
         content += f"- 距离下次生日还有 {item['nextBirthDay']} 天\n"
 
     print("生成内容完成")
-    print("content=", content)
     print("开始发送通知...")
 
-#     notify({
-#         'title': "开心每一天",
-#         'desp': content
-#     }, token)
+    notify({
+        'title': "开心每一天",
+        'desp': content
+    }, token)
 
 def get_str_obj(env_var):
     """解析环境变量中的字符串对象"""
@@ -140,11 +139,9 @@ def get_str_obj(env_var):
             return []
 
         result = json.loads(env_value)
-        print(f"解析后的数据: {result}")
         return result
     except json.JSONDecodeError as e:
         print(f"JSON 解析错误: {e}")
-        print(f"原始字符串: {repr(env_value)}")
 
         # 尝试修复常见的 JSON 格式问题
         try:
